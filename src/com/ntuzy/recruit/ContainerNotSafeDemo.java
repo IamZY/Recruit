@@ -24,10 +24,10 @@ public class ContainerNotSafeDemo {
         }
 
 //        HashSet
-
         /**
          * 故障现象
          *      java.util.ConcurrentModificationException
+         *
          * 导致原因
          *      并发争抢修改告知
          *
