@@ -229,15 +229,202 @@ CAS并发原语提现在Java语言中就是sun.miscUnSaffe类中的各个方法.
 
 ## 读写锁
 
+## CountDownLatch
+
+CountDownLatch主要有两个方法,当一个或多个线程调用await方法时,调用线程会被阻塞.其他线程调用countDown方法计数器减1(调用countDown方法时线程不会阻塞),当计数器的值变为0,因调用await方法被阻塞的线程会被唤醒,继续执行
+
+```java
+package com.ntuzy.recruit;
 
 
+import java.security.PrivateKey;
+import java.util.concurrent.CountDownLatch;
+
+/**
+ * @Author IamZY
+ * @create 2020/1/28 14:39
+ */
+enum CountryEnum {
+
+    One(1, "齐"), Two(2, "楚"), Three(3, "魏"), Four(4, "燕"), Five(5, "韩"), Six(6, "赵");
+
+    private Integer retCode;
+    private String retMessage;
+
+    CountryEnum(Integer retCode, String retMessage) {
+        this.retCode = retCode;
+        this.retMessage = retMessage;
+    }
+
+    public static CountryEnum forEach_CountryEnum(int index) {
+
+        CountryEnum[] myArray = CountryEnum.values();
+
+        for (CountryEnum element : myArray) {
+            if (element.getRetCode() == index) {
+                return element;
+            }
+        }
+
+        return null;
+    }
+
+    public Integer getRetCode() {
+        return retCode;
+    }
+
+    public void setRetCode(Integer retCode) {
+        this.retCode = retCode;
+    }
+
+    public String getRetMessage() {
+        return retMessage;
+    }
+
+    public void setRetMessage(String retMessage) {
+        this.retMessage = retMessage;
+    }
+}
+
+public class CountDownLatchDemo {
+    public static void main(String[] args) throws InterruptedException {
+
+        CountDownLatch countDownLatch = new CountDownLatch(6);
+
+        for (int i = 1; i <= 6; i++) {
+            new Thread(() -> {
+                System.out.println(Thread.currentThread().getName() + "\t 国 被灭");
+                countDownLatch.countDown();
+            }, CountryEnum.forEach_CountryEnum(i).getRetMessage()).start();
+        }
+
+        countDownLatch.await();
+        System.out.println(Thread.currentThread().getName() + "\t ########### 一統華夏");
 
 
+    }
 
+    public static void closeDoor() throws InterruptedException {
+        CountDownLatch countDownLatch = new CountDownLatch(6);
 
+        for (int i = 0; i < 6; i++) {
+            new Thread(() -> {
+                System.out.println(Thread.currentThread().getName() + "\t 上晚自习 离开教室");
+                countDownLatch.countDown();
+            }, String.valueOf(i)).start();
+        }
 
+        countDownLatch.await();
+        System.out.println(Thread.currentThread().getName() + "\t ########### 班长最后关门离开");
+    }
 
+}
 
+```
+
+## CyclicBarrier
+
+CyclicBarrier的字面意思是可循环(Cyclic) 使用的屏障(barrier).它要做的事情是,让一组线程到达一个屏障(也可以叫做同步点)时被阻塞,知道最后一个线程到达屏障时,屏障才会开门,所有被屏障拦截的线程才会继续干活,线程进入屏障通过CyclicBarrier的await()方法.
+
+```java
+package com.ntuzy.recruit;
+
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+
+/**
+ * @Author IamZY
+ * @create 2020/1/28 15:10
+ */
+public class CyclicBarrierDemo {
+    public static void main(String[] args) {
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(7, () -> {
+            System.out.println("************** 召唤神龙");
+        });
+
+        for (int i = 1; i <= 7; i++) {
+            int finalI = i;
+            new Thread(() -> {
+                System.out.println(Thread.currentThread().getName() + "\t 收集到第 " + finalI + "颗龙珠");
+
+                try {
+                    cyclicBarrier.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (BrokenBarrierException e) {
+                    e.printStackTrace();
+                }
+
+            }, String.valueOf(i)).start();
+        }
+
+    }
+}
+
+```
+
+## Semaphore
+
+信号量的主要用户两个目的,一个是用于多个共享资源的相互排斥使用,另一个用于并发资源数的控制.
+
+```java
+package com.ntuzy.recruit;
+
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * @Author IamZY
+ * @create 2020/1/28 15:17
+ */
+public class SemaphoreDemo {
+    public static void main(String[] args) {
+        Semaphore semaphore = new Semaphore(3);  // 模拟三个车位
+
+        for (int i = 1; i <= 6; i++) {  // 模拟6部车
+            new Thread(() -> {
+                try {
+                    semaphore.acquire();
+                    System.out.println(Thread.currentThread().getName() + "\t 抢到车位");
+                    TimeUnit.SECONDS.sleep(3);
+                    System.out.println(Thread.currentThread().getName() + "\t 停车3秒后离开车位");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    // 释放停车位
+                    semaphore.release();
+                }
+            }, String.valueOf(i)).start();
+        }
+
+    }
+}
+
+```
+
+> 3	 抢到车位
+> 1	 抢到车位
+> 2	 抢到车位
+> 1	 停车3秒后离开车位
+> 2	 停车3秒后离开车位
+> 3	 停车3秒后离开车位
+> 5	 抢到车位
+> 4	 抢到车位
+> 6	 抢到车位
+> 4	 停车3秒后离开车位
+> 6	 停车3秒后离开车位
+> 5	 停车3秒后离开车位
+
+## 阻塞队列
+
+阻塞队列,顾名思义,首先它是一个队列,而一个阻塞队列在数据结构中所起的作用大致如图所示:
+
+![image-20200128153111620](images/image-20200128153111620.png)
+
+当阻塞队列是空时,从队列中获取元素的操作将会被阻塞.
+当阻塞队列是满时,往队列中添加元素的操作将会被阻塞.
+同样
+试图往已满的阻塞队列中添加新圆度的线程同样也会被阻塞,知道其他线程从队列中移除一个或者多个元素或者全清空队列后使队列重新变得空闲起来并后续新增.
 
 
 
