@@ -626,7 +626,7 @@ public class ProConsumer_TraditionDemo {
 
 ![image-20200129204807152](images/image-20200129204807152.png)
 
-![image-20200129204840691](images\image-20200129204840691.png)
+![image-20200129204840691](images/image-20200129204840691.png)
 
 ![image-20200129204856581](images/image-20200129204856581.png)
 
