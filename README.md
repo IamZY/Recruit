@@ -607,15 +607,15 @@ public class ProConsumer_TraditionDemo {
 第二: 提高响应速度.当任务到达时,任务可以不需要等到线程和粗昂就爱你就能立即执行.
 第三: 提高线程的可管理性.线程是稀缺资源,如果无限的创阿金,不仅会消耗资源,还会较低系统的稳定性,使用线程池可以进行统一分配,调优和监控.
 
-![image-20200129160137265](images\image-20200129160137265.png)
+![image-20200129160137265](images/image-20200129160137265.png)
 
 ### 底层原理
 
-![image-20200129192241200](images\image-20200129192241200.png)
+![image-20200129192241200](images/image-20200129192241200.png)
 
-![image-20200129201432203](images\image-20200129201432203.png)
+![image-20200129201432203](images/image-20200129201432203.png)
 
-![image-20200129201455012](images\image-20200129201455012.png)
+![image-20200129201455012](images/image-20200129201455012.png)
 
 ### 拒绝策略
 
@@ -624,21 +624,21 @@ public class ProConsumer_TraditionDemo {
 + rejected = new ThreadPoolExecutor.DiscardOldestPolicy();//将最早进入队列的任务删，之后再尝试加入队列
 + rejected = new ThreadPoolExecutor.CallerRunsPolicy();//如果添加到线程池失败，那么主线程会自己去执行该任务
 
-![image-20200129204807152](images\image-20200129204807152.png)
+![image-20200129204807152](images/image-20200129204807152.png)
 
 ![image-20200129204840691](images\image-20200129204840691.png)
 
-![image-20200129204856581](images\image-20200129204856581.png)
+![image-20200129204856581](images/image-20200129204856581.png)
 
 ### 解决死锁问题
 
 + jps命令定位进程号
 
-  ![image-20200129211311572](images\image-20200129211311572.png)
+  ![image-20200129211311572](images/image-20200129211311572.png)
 
 + jstack找到死锁查看
 
-  ![image-20200129211332021](images\image-20200129211332021.png)
+  ![image-20200129211332021](images/image-20200129211332021.png)
 
 ```java
 package com.ntuzy.recruit;
