@@ -46,8 +46,9 @@ class MyResource {
             if (null == value || value.equalsIgnoreCase("")) {
                 FLAG = false;
                 System.out.println(Thread.currentThread().getName() + "\t 超过2秒钟没有取到数据，退出");
+            } else {
+                System.out.println(Thread.currentThread().getName() + "\t 消费队列" + value + "成功" );
             }
-            System.out.println(Thread.currentThread().getName() + "\t 消费队列" + value + "成功" );
         }
     }
 

@@ -593,6 +593,114 @@ public class ProConsumer_TraditionDemo {
 
 + 关键字和具体类
 
++ 
+
+## 线程池
+
+`ThreadPool`
+
+线程池做的工作主要是控制运行的线程的数量,处理过程中将任务加入队列,然后在线程创建后启动这些任务,如果先生超过了最大数量,超出的数量的线程排队等候,等其他线程执行完毕,再从队列中取出任务来执行.
+
+他的主要特点为:***线程复用:控制最大并发数:管理线程.***
+
+第一:降低资源消耗.通过重复利用自己创建的线程降低线程创建和销毁造成的消耗.
+第二: 提高响应速度.当任务到达时,任务可以不需要等到线程和粗昂就爱你就能立即执行.
+第三: 提高线程的可管理性.线程是稀缺资源,如果无限的创阿金,不仅会消耗资源,还会较低系统的稳定性,使用线程池可以进行统一分配,调优和监控.
+
+![image-20200129160137265](images\image-20200129160137265.png)
+
+### 底层原理
+
+![image-20200129192241200](images\image-20200129192241200.png)
+
+![image-20200129201432203](images\image-20200129201432203.png)
+
+![image-20200129201455012](images\image-20200129201455012.png)
+
+### 拒绝策略
+
++ rejected = new ThreadPoolExecutor.AbortPolicy();//默认，队列满了丢任务抛出异常
++ rejected = new ThreadPoolExecutor.DiscardPolicy();//队列满了丢任务不异常
++ rejected = new ThreadPoolExecutor.DiscardOldestPolicy();//将最早进入队列的任务删，之后再尝试加入队列
++ rejected = new ThreadPoolExecutor.CallerRunsPolicy();//如果添加到线程池失败，那么主线程会自己去执行该任务
+
+![image-20200129204807152](images\image-20200129204807152.png)
+
+![image-20200129204840691](images\image-20200129204840691.png)
+
+![image-20200129204856581](images\image-20200129204856581.png)
+
+### 解决死锁问题
+
++ jps命令定位进程号
+
+  ![image-20200129211311572](images\image-20200129211311572.png)
+
++ jstack找到死锁查看
+
+  ![image-20200129211332021](images\image-20200129211332021.png)
+
+```java
+package com.ntuzy.recruit;
+
+import java.util.concurrent.TimeUnit;
+
+/**
+ * Description:
+ * 死锁是指两个或者以上的进程在执行过程中,
+ * 因争夺资源而造成的一种相互等待的现象,
+ * 若无外力干涉那他们都将无法推进下去
+ * @Author IamZY
+ * @create 2020/1/29 20:57
+ */
+
+class HoldThread implements Runnable {
+
+    private String lockA;
+    private String lockB;
+
+    public HoldThread(String lockA, String lockB) {
+        this.lockA = lockA;
+        this.lockB = lockB;
+    }
+
+    @Override
+    public void run() {
+        synchronized (lockA) {
+            System.out.println(Thread.currentThread().getName() + "\t 自己持有锁" + lockA + "尝试获得" + lockB);
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            synchronized (lockB) {
+                System.out.println(Thread.currentThread().getName() + "\t 自己持有锁" + lockB + "尝试获得" + lockA);
+            }
+        }
+    }
+}
+
+public class DeadLockDemo {
+    public static void main(String[] args){
+        String lockA = "lockA";
+        String lockB = "lockB";
+
+        new Thread(new HoldThread(lockA,lockB),"AAA").start();
+        new Thread(new HoldThread(lockA,lockB),"BBB").start();
+
+    }
+}
+
+```
+
+
+
+
+
+
+
+
+
 
 
 
