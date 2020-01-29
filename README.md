@@ -436,3 +436,190 @@ public class SemaphoreDemo {
 
 ![image-20200128155739846](images/image-20200128155739846.png)
 
+### SynchronousQueue
+
+生产一个等待消费完成后再生产
+
+```java
+package com.ntuzy.recruit;
+
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * @Author IamZY
+ * @create 2020/1/29 10:15
+ */
+public class SynchronousQueueDemo {
+    public static void main(String[] args){
+        BlockingQueue queue = new SynchronousQueue<>();
+
+
+        new Thread(()->{
+            try {
+                System.out.println(Thread.currentThread().getName() + "\t put 1");
+                queue.put("1");
+                System.out.println(Thread.currentThread().getName() + "\t put 2");
+                queue.put("2");
+                System.out.println(Thread.currentThread().getName() + "\t put 3");
+                queue.put("3");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        },"AAA").start();
+
+
+        new Thread(()->{
+            try {
+                TimeUnit.SECONDS.sleep(5);
+                System.out.println(Thread.currentThread().getName() + "\t " + queue.take());
+                TimeUnit.SECONDS.sleep(5);
+                System.out.println(Thread.currentThread().getName() + "\t " + queue.take());
+                TimeUnit.SECONDS.sleep(5);
+                System.out.println(Thread.currentThread().getName() + "\t " + queue.take());
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        },"BBB").start();
+
+
+    }
+}
+
+```
+
+### 生产者消费者模式
+
+```java
+package com.ntuzy.recruit;
+
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+/**
+ * 线程操作资源类
+ *
+ * @Author IamZY
+ * @create 2020/1/29 10:34
+ */
+
+class ShareData {
+    private int number = 0;
+    private Lock lock = new ReentrantLock();
+
+    private Condition condition = lock.newCondition();
+
+    public void increment() throws Exception {
+
+        lock.lock();
+
+        try {
+            // 判断
+            while (number != 0) {
+                // 等待 不能生产
+                condition.await();
+            }
+            // 干活
+            number++;
+            System.out.println(Thread.currentThread().getName() + "\t" + number);
+            condition.signalAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+
+
+    }
+
+    public void decrease() throws Exception {
+        lock.lock();
+
+        try {
+            // 判断
+            while (number == 0) {
+                // 等待 不能生产
+                condition.await();
+            }
+            // 干活
+            number--;
+            System.out.println(Thread.currentThread().getName() + "\t" + number);
+            condition.signalAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+}
+
+
+public class ProConsumer_TraditionDemo {
+    public static void main(String[] args) {
+        ShareData shareData = new ShareData();
+
+
+        new Thread(()->{
+            for(int i = 0;i < 5;i++) {
+                try {
+                    shareData.increment();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        },"AAA").start();
+
+
+        new Thread(()->{
+            for(int i = 0;i < 5;i++) {
+                try {
+                    shareData.decrease();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        },"BBB").start();
+
+    }
+}
+
+```
+
+### Synchronized和Lock的区别
+
++ 关键字和具体类
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
