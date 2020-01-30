@@ -690,20 +690,62 @@ public class DeadLockDemo {
 
     }
 }
-
 ```
 
+## JVM
 
+### GC Roots
 
+![image-20200130110738969](images/image-20200130110738969.png)
 
+#### Java可以做GCRoots的对象
 
++ 虚拟栈（栈桢中的局部变量区，也叫局部变量表）
++ 方法区中的类静态属性引用的对象
++ 方法区中常量引用的对象
++ 本地方法栈（Native）引用的对象
 
+#### JVM的参数类型
 
++ 标配参数
 
++ X参数
 
++ XX参数
 
+  > jps -l
+  >
+  > jinfo -flag PrintGCDetails xxxx
 
+![image-20200130115850347](images/image-20200130115850347.png)
 
+> -Xms 等价于 -XX:InitialHeapSize
+>
+> -Xmx 等价于-XX:MaxHeapSize
+
+> java -XX:+PrintFlagsInitial
+>
+> java -XX:+PirntFlagsFinal   =没有修改过，初始值                := 人为修改过
+
+![image-20200130120741132](images/image-20200130120741132.png)
+
+#### 典型设置案例
+
+![image-20200130165550336](images/image-20200130165550336.png)
+
+## 强、软、弱、虚引用
+
+![image-20200130172218966](images/image-20200130172218966.png)
+
+### 强引用
+
+![image-20200130172323476](images/image-20200130172323476.png)
+
+### 软引用
+
+### 弱引用
+
+### 虚引用
 
 
 
