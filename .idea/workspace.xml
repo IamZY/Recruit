@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="463ae1a0-1e02-417c-b201-2d4b5a1a3964" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/ntuzy/recruit/GCOverHeadDemo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/ntuzy/recruit/JavaHeapSpaceDemo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/ntuzy/recruit/StackOverFlowErrorDemo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -119,8 +115,8 @@
       <file leaf-file-name="GCOverHeadDemo.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/ntuzy/recruit/GCOverHeadDemo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="21" column="33" lean-forward="true" selection-start-line="21" selection-start-column="33" selection-end-line="21" selection-end-column="33" />
+            <state>
+              <caret column="26" lean-forward="true" selection-start-column="26" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -427,15 +423,15 @@
       <workItem from="1580179419452" duration="10950000" />
       <workItem from="1580263399655" duration="15089000" />
       <workItem from="1580352087637" duration="9162000" />
-      <workItem from="1580440692990" duration="2863000" />
+      <workItem from="1580440692990" duration="3171000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62480000" />
+    <option name="totallyTimeSpent" value="62788000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="270" y="102" width="2091" height="1224" extended-state="0" />
+    <frame x="270" y="102" width="2091" height="1224" extended-state="1" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -884,8 +880,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/ntuzy/recruit/GCOverHeadDemo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="21" column="33" lean-forward="true" selection-start-line="21" selection-start-column="33" selection-end-line="21" selection-end-column="33" />
+        <state>
+          <caret column="26" lean-forward="true" selection-start-column="26" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
