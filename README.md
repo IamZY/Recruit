@@ -904,17 +904,120 @@ G1垃圾回收器将堆内存分割成不同的区域然后并发的对其进行
 
 ![image-20200131190734075](images/image-20200131190734075.png)
 
+## Linux常用命令
+
+### top
+
+![image-20200131193526124](images/image-20200131193526124.png)
+
+红框中为负载均衡 相加除以3*100%>60服务器压力大
+
+uptime,系统性能命令的精简版
+
+![image-20200131193705937](images/image-20200131193705937.png)
+
+### CPU：vmstat
+
+![image-20200131193808250](images/image-20200131193808250.png)
+
+![image-20200131193823039](images/image-20200131193823039.png)
+
+![image-20200131194005808](images/image-20200131194005808.png)
+
+### 查看内存 free
+
+![image-20200131194134649](images/image-20200131194134649.png)
+
+![image-20200131194318347](images/image-20200131194318347.png)
+
+### 硬盘 df
+
+![image-20200131194356086](images/image-20200131194356086.png)
+
+### 磁盘IO iostat
+
+每2秒中取样一次。取样3次
+
+![image-20200131194444885](images/image-20200131194444885.png)
+
+![image-20200131194500416](images/image-20200131194500416.png)
+
+![image-20200131194540706](images/image-20200131194540706.png)
+
+### 网络IO：ifstat
+
+![image-20200131194609831](images/image-20200131194609831.png)
+
+![image-20200131194708650](images/image-20200131194708650.png)
+
+![image-20200131194714859](images/image-20200131194714859.png)
+
+## CPU占用过高问题解析
+
+![image-20200131194955590](images/image-20200131194955590.png)
+
+```shell
+# 找出test.log中包含login信息的,且没有deviceType这个字段的
+cat test.log | grep "login"|grep -v "deviceType"
+```
+
+### 例子
+
+![image-20200131201546597](images/image-20200131201546597.png)
+
+![image-20200131201410822](images/image-20200131201410822.png)
+
+7676改16进制 1d98
+
+![image-20200131201217338](images/image-20200131201217338.png)
 
 
 
+![image-20200131200109747](images/image-20200131200109747.png)
 
+![image-20200131200126756](images/image-20200131200126756.png)
 
+## Github
 
+git clone xxx.git
 
++ in
 
+  xxx in:name
 
+  xxx in:description
 
+  xxx in:readme
 
+  xxx in:name,readme
 
++ star
 
+  xxx stars:>=500
+
+  在500-5000之间
+
+  > xxx stars:500..5000
+
++ forks
+
+  xxx forks:>=500
+
++ awesome 
+
+  awesome xxx
+
++ 给别人指出关键代码的行号
+
+  地址+#L数字                                 一行
+
+  地址+#L数字..数字                       一段
+
++ 项目内搜索
+
+  项目 直接按 t
+
++ :fries: 圈子好友
+
+  location:nanjing language:java
 
